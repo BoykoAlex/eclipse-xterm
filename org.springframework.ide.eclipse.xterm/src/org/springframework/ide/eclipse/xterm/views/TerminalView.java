@@ -35,7 +35,7 @@ public class TerminalView extends ViewPart {
 
 	@Override
 	public void createPartControl(Composite parent) {
-		browser = new Browser(parent, SWT.WEBKIT);
+		browser = new Browser(parent, SWT.NONE);
 		browser.setUrl("http://localhost:8080/terminal/1");
 		makeActions();
 		contributeToActionBars();
