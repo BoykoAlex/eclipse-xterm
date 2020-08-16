@@ -1,6 +1,11 @@
 package org.springframework.ide.eclipse.xterm;
+import java.util.UUID;
+
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+import org.springframework.ide.eclipse.xterm.views.TerminalView;
 
 public class XtermPlugin extends AbstractUIPlugin {
 	
@@ -32,6 +37,13 @@ public class XtermPlugin extends AbstractUIPlugin {
 	
 	public static void log(String m, Throwable t) {
 		getDefault().getLog().error(m, t);
+	}
+	
+	public void openTerminalView(String cmd, String cwd) throws Exception {
+		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+		String terminalId = UUID.randomUUID().toString();
+		TerminalView terminalView = (TerminalView) page.showView(TerminalView.ID, terminalId, IWorkbenchPage.VIEW_ACTIVATE);
+		terminalView.startTerminal(terminalId, cmd, cwd);
 	}
 
 }
