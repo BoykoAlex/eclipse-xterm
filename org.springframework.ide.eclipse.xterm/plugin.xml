@@ -12,5 +12,48 @@
             name="Terminal">
       </view>
    </extension>
+   <extension
+         point="org.eclipse.e4.ui.css.swt.theme">
+      <stylesheet
+            uri="css/terminal-dark-theme.css">
+         <themeid
+               refid="org.eclipse.e4.ui.css.theme.e4_dark">
+         </themeid>
+      </stylesheet>
+   </extension>
+   <extension
+         point="org.eclipse.ui.themes">
+      <colorDefinition
+            categoryId="org.eclipse.ui.workbenchMisc"
+            id="org.springframework.ide.eclipse.xterm.background"
+            isEditable="true"
+            label="Terminal Background Color"
+            value="255,255,255">
+      </colorDefinition>
+      <colorDefinition
+            categoryId="org.eclipse.ui.workbenchMisc"
+            id="org.springframework.ide.eclipse.xterm.foreground"
+            label="Terminal Foreground Color"
+            value="0,0,0">
+      </colorDefinition>
+      <colorDefinition
+            categoryId="org.eclipse.ui.workbenchMisc"
+            id="org.springframework.ide.eclipse.xterm.selection"
+            label="Terminal Selection Color"
+            value="45,45,45">
+      </colorDefinition>
+      <colorDefinition
+            categoryId="org.eclipse.ui.workbenchMisc"
+            id="org.springframework.ide.eclipse.xterm.cursor"
+            label="Terminal Cursor Color"
+            value="0,0,0">
+      </colorDefinition>
+      <colorDefinition
+            categoryId="org.eclipse.ui.workbenchMisc"
+            id="org.springframework.ide.eclipse.xterm.cursorAccent"
+            label="Terminal Cursor Accent Color"
+            value="0,0,0">
+      </colorDefinition>
+   </extension>
 
 </plugin>

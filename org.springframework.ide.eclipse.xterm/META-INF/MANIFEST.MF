@@ -11,3 +11,4 @@ Require-Bundle: org.eclipse.ui,
 Import-Package: javax.inject
 Bundle-ClassPath: lib/,
  .
+Bundle-ActivationPolicy: lazy
