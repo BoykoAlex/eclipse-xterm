@@ -7,7 +7,8 @@ Automatic-Module-Name: org.springframework.ide.eclipse.xterm
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Activator: org.springframework.ide.eclipse.xterm.XtermPlugin
 Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources
 Import-Package: javax.inject
 Bundle-ClassPath: lib/,
  .
