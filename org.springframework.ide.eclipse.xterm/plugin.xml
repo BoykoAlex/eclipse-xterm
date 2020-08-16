@@ -6,7 +6,7 @@
       <view
             category="org.eclipse.ui"
             class="org.springframework.ide.eclipse.xterm.views.TerminalView"
-            icon="icons/sample.png"
+            icon="icons/terminal.png"
             id="org.springframework.ide.eclipse.xterm.views.TerminalView"
             inject="true"
             name="Terminal">
