@@ -10,6 +10,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -142,13 +143,15 @@ public class TerminalView extends ViewPart {
 	private Map<String, String> createParameters() throws UnsupportedEncodingException {
 		Map<String, String> params = new HashMap<>();
 		ColorRegistry colorRegistry = PlatformUI.getWorkbench().getThemeManager().getCurrentTheme().getColorRegistry();
-		params.put("bg", rgbToUrlParameter(colorRegistry.get(XtermPlugin.BG_COLOR).getRGB()));
-		params.put("fg", rgbToUrlParameter(colorRegistry.get(XtermPlugin.FG_COLOR).getRGB()));
+		params.put("bg", URLEncoder.encode(rgbToUrlParameter(colorRegistry.get(XtermPlugin.BG_COLOR).getRGB()), UTF8));
+		params.put("fg", URLEncoder.encode(rgbToUrlParameter(colorRegistry.get(XtermPlugin.FG_COLOR).getRGB()), UTF8));
 		RGB selectionColor = colorRegistry.get(XtermPlugin.SELECTION_COLOR).getRGB();
 		// add transparency to selection color
-		params.put("selection", rgbaToUrlParameter(new RGBA(selectionColor.red, selectionColor.green, selectionColor.blue, 51)));
-		params.put("cursor", rgbToUrlParameter(colorRegistry.get(XtermPlugin.CURSOR_COLOR).getRGB()));
-		params.put("cursorAccent", rgbToUrlParameter(colorRegistry.get(XtermPlugin.CURSOR_ACCENT_COLOR).getRGB()));
+		params.put("selection", URLEncoder.encode(rgbaToUrlParameter(new RGBA(selectionColor.red, selectionColor.green, selectionColor.blue, 51)), UTF8));
+		params.put("cursor", URLEncoder.encode(rgbToUrlParameter(colorRegistry.get(XtermPlugin.CURSOR_COLOR).getRGB()), UTF8));
+		params.put("cursorAccent", URLEncoder.encode(rgbToUrlParameter(colorRegistry.get(XtermPlugin.CURSOR_ACCENT_COLOR).getRGB()), UTF8));
+		params.put("cmd", URLEncoder.encode(XtermPlugin.getDefault().getPreferenceStore().getString(XtermPlugin.PREFS_DEFAULT_SHELL_CMD), UTF8));
+		params.put("cwd", URLEncoder.encode(ResourcesPlugin.getWorkspace().getRoot().getLocation().toOSString(), UTF8));
 		return params;
 	}
 	
@@ -162,7 +165,7 @@ public class TerminalView extends ViewPart {
 		sb.append(",");
 		sb.append(rgb.blue);
 		sb.append(")");
-		return URLEncoder.encode(sb.toString(), UTF8);
+		return sb.toString();
 	}
 
 	private String rgbaToUrlParameter(RGBA rgba) throws UnsupportedEncodingException {
@@ -175,7 +178,7 @@ public class TerminalView extends ViewPart {
 		sb.append(",");
 		sb.append(rgba.alpha / 255.0);
 		sb.append(")");
-		return URLEncoder.encode(sb.toString(), UTF8);
+		return sb.toString();
 	}
 	
 	private void contributeToActionBars() {

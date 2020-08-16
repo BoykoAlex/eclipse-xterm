@@ -15,7 +15,9 @@ public class XtermPlugin extends AbstractUIPlugin {
 	public static final String FG_COLOR = "org.springframework.ide.eclipse.xterm.foreground"; 
 	public static final String SELECTION_COLOR = "org.springframework.ide.eclipse.xterm.selection"; 
 	public static final String CURSOR_COLOR = "org.springframework.ide.eclipse.xterm.cursor"; 
-	public static final String CURSOR_ACCENT_COLOR = "org.springframework.ide.eclipse.xterm.cursorAccent"; 
+	public static final String CURSOR_ACCENT_COLOR = "org.springframework.ide.eclipse.xterm.cursorAccent";
+	
+	public static final String PREFS_DEFAULT_SHELL_CMD = "org.springframework.ide.eclipse.xterm.defaultShellCmd";
 
 	@Override
 	public void start(BundleContext bundle) throws Exception {

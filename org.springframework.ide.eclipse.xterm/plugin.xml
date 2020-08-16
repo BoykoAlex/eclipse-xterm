@@ -9,7 +9,7 @@
             icon="icons/terminal.png"
             id="org.springframework.ide.eclipse.xterm.views.TerminalView"
             inject="true"
-            name="Terminal">
+            name="Xterm">
       </view>
    </extension>
    <extension
@@ -24,36 +24,43 @@
    <extension
          point="org.eclipse.ui.themes">
       <colorDefinition
-            categoryId="org.eclipse.ui.workbenchMisc"
+            categoryId="org.springframework.ide.eclipse.xterm"
             id="org.springframework.ide.eclipse.xterm.background"
             isEditable="true"
-            label="Terminal Background Color"
+            label="Background Color"
             value="255,255,255">
       </colorDefinition>
       <colorDefinition
-            categoryId="org.eclipse.ui.workbenchMisc"
+            categoryId="org.springframework.ide.eclipse.xterm"
             id="org.springframework.ide.eclipse.xterm.foreground"
-            label="Terminal Foreground Color"
+            label="Foreground Color"
             value="0,0,0">
       </colorDefinition>
       <colorDefinition
-            categoryId="org.eclipse.ui.workbenchMisc"
+            categoryId="org.springframework.ide.eclipse.xterm"
             id="org.springframework.ide.eclipse.xterm.selection"
-            label="Terminal Selection Color"
+            label="Selection Color"
             value="45,45,45">
       </colorDefinition>
       <colorDefinition
-            categoryId="org.eclipse.ui.workbenchMisc"
+            categoryId="org.springframework.ide.eclipse.xterm"
             id="org.springframework.ide.eclipse.xterm.cursor"
-            label="Terminal Cursor Color"
+            label="Cursor Color"
             value="0,0,0">
       </colorDefinition>
       <colorDefinition
-            categoryId="org.eclipse.ui.workbenchMisc"
+            categoryId="org.springframework.ide.eclipse.xterm"
             id="org.springframework.ide.eclipse.xterm.cursorAccent"
-            label="Terminal Cursor Accent Color"
+            label="Cursor Accent Color"
             value="0,0,0">
       </colorDefinition>
+      <themeElementCategory
+            id="org.springframework.ide.eclipse.xterm"
+            label="Xterm">
+         <description>
+            Xterm terminal apperance theme settings
+         </description>
+      </themeElementCategory>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -64,7 +71,7 @@
                commandId="org.springframework.ide.eclipse.xterm.open"
                icon="icons/terminal.png"
                id="org.springframework.ide.eclipse.xterm.open"
-               label="Open Terminal"
+               label="Open Xterm"
                style="push"
                tooltip="Open terminal for the folder">
             <visibleWhen
@@ -141,6 +148,20 @@
             id="org.springframework.ide.eclipse.xterm.open"
             name="Open Terminal">
       </command>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="org.springframework.ide.eclipse.xterm.views.XtermPreferencesInitializr">
+      </initializer>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="org.springframework.ide.eclipse.xterm.views.XtermPreferencePage"
+            id="org.springframework.ide.eclipse.xterm."
+            name="Xterm">
+      </page>
    </extension>
 
 </plugin>
