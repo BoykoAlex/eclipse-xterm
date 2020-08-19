@@ -4,14 +4,15 @@ Bundle-Name: Xterm
 Bundle-SymbolicName: org.springframework.ide.eclipse.xterm;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Automatic-Module-Name: org.springframework.ide.eclipse.xterm
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Activator: org.springframework.ide.eclipse.xterm.XtermPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.springframework.ide.eclipse.boot.dash;bundle-version="3.9.14",
  org.springframework.ide.eclipse.boot.dash.docker;bundle-version="3.9.14",
  org.springsource.ide.eclipse.commons.livexp,
- org.springframework.ide.eclipse.boot
+ org.springframework.ide.eclipse.boot,
+ org.eclipse.core.resources
 Import-Package: javax.inject
 Bundle-ClassPath: lib/,
  .

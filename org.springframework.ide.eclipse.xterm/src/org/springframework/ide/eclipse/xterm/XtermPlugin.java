@@ -1,18 +1,24 @@
 package org.springframework.ide.eclipse.xterm;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
-import org.springframework.ide.eclipse.boot.core.SimpleUriBuilder;
 import org.springframework.ide.eclipse.xterm.views.TerminalView;
-import org.springsource.ide.eclipse.commons.livexp.util.Log;
+import org.springsource.ide.eclipse.commons.livexp.util.ExceptionUtil;
 
 public class XtermPlugin extends AbstractUIPlugin {
 	
 	private static XtermPlugin plugin;
+	
+	public static final String BG_COLOR = "org.springframework.ide.eclipse.xterm.background"; 
+	public static final String FG_COLOR = "org.springframework.ide.eclipse.xterm.foreground"; 
+	public static final String SELECTION_COLOR = "org.springframework.ide.eclipse.xterm.selection"; 
+	public static final String CURSOR_COLOR = "org.springframework.ide.eclipse.xterm.cursor"; 
+	public static final String CURSOR_ACCENT_COLOR = "org.springframework.ide.eclipse.xterm.cursorAccent";
+	
+	public static final String PREFS_DEFAULT_SHELL_CMD = "org.springframework.ide.eclipse.xterm.defaultShellCmd";
 
 	@Override
 	public void start(BundleContext bundle) throws Exception {
@@ -27,24 +33,36 @@ public class XtermPlugin extends AbstractUIPlugin {
 	public static XtermPlugin getDefault() {
 		return plugin;
 	}
+
+	public String getXtermServiceUrl() {
+		return "http://localhost:8080/terminal/";
+	}
 	
-	public void openTerminal(String cmd, String workingDir) {
+	public static void log(String m, Throwable t) {
+		getDefault().getLog().error(m, t);
+	}
+	
+	public void openTerminalView(String cmd, String cwd) {
 		try {
 			IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-			if (page!=null) {
-				String sessionId = UUID.randomUUID().toString();
-				TerminalView view = (TerminalView) page.showView(TerminalView.ID, sessionId, IWorkbenchPage.VIEW_ACTIVATE);
-				SimpleUriBuilder url = new SimpleUriBuilder("http://localhost:8080/terminal/"+sessionId);
-				if (cmd!=null) {
-					url.addParameter("cmd", cmd);
-				}
-				if (workingDir!=null) {
-					url.addParameter("cwd", workingDir);
-				}
-				view.url.setValue(url.toString());
-			}
+			String terminalId = UUID.randomUUID().toString();
+			TerminalView terminalView = (TerminalView) page.showView(TerminalView.ID, terminalId, IWorkbenchPage.VIEW_ACTIVATE);
+			terminalView.startTerminal(terminalId, cmd, cwd);
 		} catch (Exception e) {
-			Log.log(e);
+			XtermPlugin.log(e);
+		}
+	}
+
+	public static void log(Throwable e) {
+		if (ExceptionUtil.isCancelation(e)) {
+			//Don't log canceled operations, those aren't real errors.
+			return;
+		}
+		try {
+			XtermPlugin.getDefault().getLog().log(ExceptionUtil.status(e));
+		} catch (NullPointerException npe) {
+			//Can happen if errors are trying to be logged during Eclipse's shutdown
+			e.printStackTrace();
 		}
 	}
 
