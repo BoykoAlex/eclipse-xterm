@@ -7,7 +7,12 @@ Automatic-Module-Name: org.springframework.ide.eclipse.xterm
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-Activator: org.springframework.ide.eclipse.xterm.XtermPlugin
 Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime
+ org.eclipse.core.runtime,
+ org.springframework.ide.eclipse.boot.dash;bundle-version="3.9.14",
+ org.springframework.ide.eclipse.boot.dash.docker;bundle-version="3.9.14",
+ org.springsource.ide.eclipse.commons.livexp,
+ org.springframework.ide.eclipse.boot
 Import-Package: javax.inject
 Bundle-ClassPath: lib/,
  .
+Bundle-ActivationPolicy: lazy

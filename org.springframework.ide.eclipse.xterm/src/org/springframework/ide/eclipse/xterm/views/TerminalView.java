@@ -16,6 +16,8 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.springsource.ide.eclipse.commons.livexp.core.LiveVariable;
+import org.springsource.ide.eclipse.commons.livexp.core.UIValueListener;
 
 
 public class TerminalView extends ViewPart {
@@ -32,13 +34,23 @@ public class TerminalView extends ViewPart {
 
 	private Browser browser;
 	 
+	public final LiveVariable<String> url = new LiveVariable<>("http://localhost:8080/terminal/0");
 
+	public void setUrl(String url) {
+		browser.setUrl(url);
+	}
+	
 	@Override
 	public void createPartControl(Composite parent) {
-		browser = new Browser(parent, SWT.WEBKIT);
-		browser.setUrl("http://localhost:8080/terminal/1");
+		browser = new Browser(parent, SWT.NONE);
 		makeActions();
 		contributeToActionBars();
+		url.addListener(UIValueListener.from((e, v) -> {
+			String url = e.getValue();
+			if (url!=null) {
+				browser.setUrl(url);
+			}
+		}));
 	}
 
 	private void contributeToActionBars() {

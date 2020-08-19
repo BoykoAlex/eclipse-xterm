@@ -12,5 +12,11 @@
             name="Terminal">
       </view>
    </extension>
+   <extension
+         point="org.springframework.ide.eclipse.boot.dash.injections">
+      <injection
+            class="org.springframework.ide.eclipse.xterm.bootdash.BootDashInjections">
+      </injection>
+   </extension>
 
 </plugin>
