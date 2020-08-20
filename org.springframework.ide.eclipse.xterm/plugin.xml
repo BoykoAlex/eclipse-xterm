@@ -67,6 +67,12 @@
             Xterm terminal apperance theme settings
          </description>
       </themeElementCategory>
+      <fontDefinition
+            categoryId="org.springframework.ide.eclipse.xterm"
+            defaultsTo="org.eclipse.jface.textfont"
+            id="org.springframework.ide.eclipse.xterm.font"
+            label="Font">
+      </fontDefinition>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
