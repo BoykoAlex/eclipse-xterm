@@ -41,7 +41,8 @@ public class XtermServiceProcessManager {
 				"--server.port=" + port,
 				"--management.endpoint.shutdown.enabled=true",
 				"--management.endpoints.web.exposure.include=health,info,shutdown",
-				"--terminal.pty.shutdown=immediately", // terminal pty process destroyed right after sockets closed
+				"--terminal.pty.shutdown=delay", // terminal pty process destroyed right after sockets closed
+				"--terminal.pty.shutdown-delay=5",
 				"--terminal.auto-shutdown.on=true", // terminal app can shutdown itself if not used 
 				"--terminal.auto-shutdown.delay=30" // terminal app shuts itself down in not used for 30 sec	
 		);
@@ -66,19 +67,19 @@ public class XtermServiceProcessManager {
 	}
 	
 	synchronized private boolean isStarted(int port) {
-		HttpGet request = new HttpGet("http://localhost:" + port + "/actuator/health");
-		request.setHeader("Content-Type", "application/json");
+		HttpGet request = new HttpGet("http://localhost:" + port);
 		try {
 			HttpResponse response = httpClient.execute(request);
 			if (response.getStatusLine().getStatusCode() == 200) {
-				ByteArrayOutputStream result = new ByteArrayOutputStream();
-				byte[] buffer = new byte[1024];
-				int length;
-				while ((length = response.getEntity().getContent().read(buffer)) != -1) {
-					result.write(buffer, 0, length);
-				}
-				String responseStr = result.toString(StandardCharsets.UTF_8.name());
-				return responseStr.matches("\\s*\\{\\s*\"status\"\\s*:\\s*\"UP\"\\s*\\}\\s*");
+//				ByteArrayOutputStream result = new ByteArrayOutputStream();
+//				byte[] buffer = new byte[1024];
+//				int length;
+//				while ((length = response.getEntity().getContent().read(buffer)) != -1) {
+//					result.write(buffer, 0, length);
+//				}
+//				String responseStr = result.toString(StandardCharsets.UTF_8.name());
+//				return responseStr.matches("\\s*\\{\\s*\"status\"\\s*:\\s*\"UP\"\\s*\\}\\s*");
+				return true;
 			}
 		} catch (IOException e) {
 			// Ignore

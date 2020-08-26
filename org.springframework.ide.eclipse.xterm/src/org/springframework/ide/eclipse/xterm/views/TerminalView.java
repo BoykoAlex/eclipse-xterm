@@ -66,14 +66,14 @@ public class TerminalView extends ViewPart {
 		browser = new Browser(parent, SWT.NONE);
 		makeActions();
 		contributeToActionBars();
-		refresh();
+		navigateToTerminal(terminalId, null, ResourcesPlugin.getWorkspace().getRoot().getLocation().toOSString());
 	}
 	
 	public CompletableFuture<Void> refresh() {
-		return navigateToTerminal(terminalId, null, null);
+		return navigateToTerminal(terminalId, null, ResourcesPlugin.getWorkspace().getRoot().getLocation().toOSString());
 	}
 	
-	private CompletableFuture<Void> navigateToTerminal(String terminalId, String cmd, String cwd) {
+	private CompletableFuture<Void> navigateToTerminal(final String terminalId, final String cmd, final String cwd) {
 		return CompletableFuture.runAsync(() -> {
 			try {
 				String serviceUrl = XtermPlugin.getDefault().xtermUrl().get(10, TimeUnit.SECONDS);
@@ -86,7 +86,8 @@ public class TerminalView extends ViewPart {
 					if (display != null && !display.isDisposed()) {
 						display.asyncExec(() -> {
 							if (browser != null && !browser.isDisposed()) {
-								browser.setUrl(createUrl(serviceUrl, terminalId, cmd, cwd));
+								String url = createUrl(serviceUrl, terminalId, cmd, cwd);
+								browser.setUrl(url);
 							}
 						});
 					}
@@ -129,8 +130,6 @@ public class TerminalView extends ViewPart {
 		}
 		if (cwd != null && !cwd.isEmpty()) {
 			urlBuilder.addParameter("cwd", cwd);
-		} else {
-			urlBuilder.addParameter("cwd", ResourcesPlugin.getWorkspace().getRoot().getLocation().toOSString());
 		}
 		
 		return urlBuilder.toString();
