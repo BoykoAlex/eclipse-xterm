@@ -6,4 +6,4 @@ Xterm based terminal Eclipse integration. Contributes **Xterm** view to Eclipse 
 1. Clone https://github.com/BoykoAlex/xterm, cd into **xterm** folder and run `./mvnw clean install`
 2. Run maven update on the eclipse xterm plugin project thus `/lib/xterm.jar` is created.
 
-**Note**: current state of the project requires **xterm** Spring Boot app launched separately on port **8080**, i.e. run `./mvnw spring-boot:run` from the **xterm** project folder
+**Note**: current state of the project may require manually copying `xterm.jar` into the lib folder (xterm built JAR)
