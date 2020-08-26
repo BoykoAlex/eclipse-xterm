@@ -21,7 +21,7 @@ public class OpenDockerTerminal extends AbstractBootDashElementsAction {
 	public void run() {
 		DockerContainer c = getDockerContainer();
 		String id = c.getName();
-		XtermPlugin.getDefault().openTerminalView("docker exec -it "+id+" /bin/bash", null);
+		XtermPlugin.getDefault().openTerminalView("/usr/local/bin/docker exec -it "+id+" /bin/bash", null);
 	}
 
 
