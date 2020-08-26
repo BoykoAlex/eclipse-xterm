@@ -8,12 +8,13 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Activator: org.springframework.ide.eclipse.xterm.XtermPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.springframework.ide.eclipse.boot.dash;bundle-version="3.9.14",
- org.springframework.ide.eclipse.boot.dash.docker;bundle-version="3.9.14",
+ org.eclipse.core.resources,
+ org.apache.httpcomponents.httpclient,
+ org.apache.httpcomponents.httpcore,
  org.springsource.ide.eclipse.commons.livexp,
  org.springframework.ide.eclipse.boot,
- org.eclipse.core.resources
+ org.springframework.ide.eclipse.boot.dash,
+ org.springframework.ide.eclipse.boot.dash.docker
 Import-Package: javax.inject
-Bundle-ClassPath: lib/,
- .
+Bundle-ClassPath: .
 Bundle-ActivationPolicy: lazy

@@ -1,7 +1,5 @@
 package org.springframework.ide.eclipse.xterm.bootdash;
 
-import java.util.Collection;
-
 import org.springframework.ide.eclipse.boot.dash.api.App;
 import org.springframework.ide.eclipse.boot.dash.docker.runtarget.DockerContainer;
 import org.springframework.ide.eclipse.boot.dash.model.BootDashElement;
@@ -15,7 +13,7 @@ public class OpenDockerTerminal extends AbstractBootDashElementsAction {
 		super(params);
 		this.setText("Open Shell");
 		this.setToolTipText("Open Shell in selected container");
-//		this.setImageDescriptor(BootDashActivator.getImageDescriptor("icons/open_console.png"));
+		this.setImageDescriptor(XtermPlugin.imageDescriptorFromPlugin(XtermPlugin.getDefault().getBundle().getSymbolicName(), "icons/terminal.png"));
 //		this.setDisabledImageDescriptor(BootDashActivator.getImageDescriptor("icons/open_console_disabled.png"));
 	}
 	
