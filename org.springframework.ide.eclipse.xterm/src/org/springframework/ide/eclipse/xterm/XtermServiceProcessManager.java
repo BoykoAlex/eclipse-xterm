@@ -1,11 +1,9 @@
 package org.springframework.ide.eclipse.xterm;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 
 import org.apache.http.HttpResponse;
@@ -39,14 +37,12 @@ public class XtermServiceProcessManager {
 				"-jar",
 				Paths.get(url.getPath()).toString(),
 				"--server.port=" + port,
-				"--management.endpoint.shutdown.enabled=true",
-				"--management.endpoints.web.exposure.include=health,info,shutdown",
 				"--terminal.pty.shutdown=delay", // terminal pty process destroyed right after sockets closed
 				"--terminal.pty.shutdown-delay=5",
 				"--terminal.auto-shutdown.on=true", // terminal app can shutdown itself if not used 
 				"--terminal.auto-shutdown.delay=30" // terminal app shuts itself down in not used for 30 sec	
 		);
-	
+		
 		String tempDir = System.getProperty("java.io.tmpdir");
 		File logFile = Paths.get(tempDir, "xterm-log.log").toFile();
 		builder.redirectError(logFile);
@@ -58,7 +54,7 @@ public class XtermServiceProcessManager {
 	synchronized private void waitUntilStarted() {
 		do {
 			try {
-				Thread.sleep(50);
+				Thread.sleep(150);
 			} catch (InterruptedException e) {
 				XtermPlugin.log(e);
 				this.port = INVALID_PORT;
@@ -71,14 +67,6 @@ public class XtermServiceProcessManager {
 		try {
 			HttpResponse response = httpClient.execute(request);
 			if (response.getStatusLine().getStatusCode() == 200) {
-//				ByteArrayOutputStream result = new ByteArrayOutputStream();
-//				byte[] buffer = new byte[1024];
-//				int length;
-//				while ((length = response.getEntity().getContent().read(buffer)) != -1) {
-//					result.write(buffer, 0, length);
-//				}
-//				String responseStr = result.toString(StandardCharsets.UTF_8.name());
-//				return responseStr.matches("\\s*\\{\\s*\"status\"\\s*:\\s*\"UP\"\\s*\\}\\s*");
 				return true;
 			}
 		} catch (IOException e) {
@@ -90,7 +78,7 @@ public class XtermServiceProcessManager {
 	synchronized void stopService() {
 		if (process != null && process.isAlive()) {
 			if (port > 0) {
-				HttpPost request = new HttpPost("http://localhost:" + port + "/actuator/shutdown");
+				HttpPost request = new HttpPost("http://localhost:" + port + "/shutdown");
 				request.setHeader("Content-Type", "application/json");
 				try {
 					HttpResponse response = httpClient.execute(request);
